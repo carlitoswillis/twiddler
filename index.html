@@ -58,7 +58,7 @@
 
         
 
-        if (event.target.className === "tweet") {
+        if (event.target.className === "tweet" && event.target.id !== '') {
                 var $h1 = $('h1');
                 var $body = $('body');
                 $body.html('');
@@ -82,7 +82,8 @@
                   }
                 }
         
-                $tweets.appendTo($body);}
+                $tweets.appendTo($body);
+              }
         
       });
 
