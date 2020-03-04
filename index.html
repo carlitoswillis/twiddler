@@ -53,33 +53,36 @@
 
       $(document).click(function(event){
 
-        
+
+        console.log(event);
 
         
-        var $h1 = $('h1');
-        var $body = $('body');
-        $body.html('');
-        $h1.appendTo($body);
-        var $tweets = $("<div class='tweets'></div>");
-        var $times = $("<div></div>");    
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweedId = tweetIDs[index];
-          var $time = $('<p class="time"></p>');
-          var tweet = streams.home[index];
-          var $tweet = $('<div class="tweet"></div>');
-          var dateText = tweet.created_at.toDateString() + "-"  +tweet.created_at.toLocaleTimeString();
-          $time.text(dateText);
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          index -= 1;
-          if ((tweet.user) === event.target.id){
-            $time.appendTo($tweet);
-            $tweet.appendTo($tweets);
-          }
-        }
-
-        $tweets.appendTo($body);
+        if (event.target.className === "tweet") {
+                var $h1 = $('h1');
+                var $body = $('body');
+                $body.html('');
+                $h1.appendTo($body);
+                var $tweets = $("<div class='tweets'></div>");
+                var $times = $("<div></div>");    
+        
+                var index = streams.home.length - 1;
+                while(index >= 0){
+                  var tweedId = tweetIDs[index];
+                  var $time = $('<p class="time"></p>');
+                  var tweet = streams.home[index];
+                  var $tweet = $('<div class="tweet"></div>');
+                  var dateText = tweet.created_at.toDateString() + "-"  +tweet.created_at.toLocaleTimeString();
+                  $time.text(dateText);
+                  $tweet.text('@' + tweet.user + ': ' + tweet.message);
+                  index -= 1;
+                  if ((tweet.user) === event.target.id && event.target.className !== "time"){
+                    $time.appendTo($tweet);
+                    $tweet.appendTo($tweets);
+                  }
+                }
+        
+                $tweets.appendTo($body);}
         
       });
 
