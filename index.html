@@ -17,6 +17,8 @@
       var tweetIDs = []; 
       var tweetDict = {};
 
+      var loadtweets = $('<div class="divcenter"> <button id="loadtweets">Refresh Tweets</button> </div>');
+
       $(document).ready(function(){
         var $h1 = $('h1');
         var $body = $("body");
@@ -25,6 +27,8 @@
         var $tweets = $("<div class='tweets'></div>");
         var $times = $("<div></div>");    
         var $tweed = $("<div></div>"); 
+        var $loadtweets = loadtweets;
+        $loadtweets.appendTo($body);
 
         var index = streams.home.length - 1;
         while(index >= 0){
@@ -64,7 +68,9 @@
                 $body.html('');
                 $h1.appendTo($body);
                 var $tweets = $("<div class='tweets'></div>");
-                var $times = $("<div></div>");    
+                var $times = $("<div></div>");   
+                var $loadtweets = loadtweets;
+                $loadtweets.appendTo($body); 
         
                 var index = streams.home.length - 1;
                 while(index >= 0){
@@ -84,15 +90,41 @@
         
                 $tweets.appendTo($body);
               }
+
+              else if (event.target.id === "loadtweets") {
+                var $h1 = $('h1');
+                var $body = $("body");
+                $body.html('');
+                $h1.appendTo($body);
+                var $tweets = $("<div class='tweets'></div>");
+                var $times = $("<div></div>");    
+                var $tweed = $("<div></div>"); 
+                var $loadtweets = loadtweets;
+                $loadtweets.appendTo($body);
+
+                var index = streams.home.length - 1;
+                while(index >= 0){
+                  var $time = $('<p class="time"></p>');
+                  var tweet = streams.home[index];
+                  var $tweet = $('<div class="tweet"></div>');
+                  var dt = (new Date);
+                  var dateText = tweet.created_at.toDateString() + "-"  +tweet.created_at.toLocaleTimeString();
+                  $time.text(dateText);
+                  $tweet.text('@' + tweet.user + ': ' + tweet.message);
+                  index -= 1;
+                  var tweetID = tweet.user;
+                  $($tweet).attr('id', (tweetID));
+                  tweetIDs.push(tweetID);
+                  tweetDict[tweetID] = tweet.user;
+                  $time.appendTo($tweet);
+                  $tweet.appendTo($tweets);
+
+                }
+                $tweets.appendTo($body);
+              }
         
       });
-
-
-
-      
-
-      
-      
+    
 
     </script>
       
