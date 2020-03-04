@@ -3,25 +3,96 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="assets/stylesheets/main.css">
   </head>
-  <body>
+
+  
+  
+  <body class="tweetgrid">
+      
     <script>
 
+      var tweetIDs = []; 
+      var tweetDict = {};
+
       $(document).ready(function(){
+        var $h1 = $('h1');
         var $body = $('body');
         $body.html('');
+        $h1.appendTo($body);
+        var $tweets = $("<div class='tweets'></div>");
+        var $times = $("<div></div>");    
+        var $tweed = $("<div></div>"); 
 
         var index = streams.home.length - 1;
         while(index >= 0){
+          var $time = $('<p class="time"></p>');
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
+          var $tweet = $('<div class="tweet"></div>');
+          var dt = (new Date);
+          var dateText = tweet.created_at.toDateString() + "-"  +tweet.created_at.toLocaleTimeString();
+          $time.text(dateText);
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
           index -= 1;
+          var tweetID = tweet.user;
+          $($tweet).attr('id', (tweetID));
+          tweetIDs.push(tweetID);
+          tweetDict[tweetID] = tweet.user;
+          $time.appendTo($tweet);
+          $tweet.appendTo($tweets);
+
         }
+        $tweets.appendTo("body");
+
+        
+
 
       });
 
+      $(document).addEventListener("click")(function(event){
+
+
+      // for (var j = 0; j < tweetIDs.length; j++) 
+        
+        var $h1 = $('h1');
+        var $body = $('body');
+        $body.html('');
+        $h1.appendTo($body);
+        var $tweets = $("<div class='tweets'></div>");
+        var $times = $("<div></div>");    
+
+        var index = streams.home.length - 1;
+        while(index >= 0){
+          var tweedId = tweetIDs[index];
+          var $time = $('<p class="time"></p>');
+          var tweet = streams.home[index];
+          var $tweet = $('<div class="tweet"></div>');
+          var dateText = tweet.created_at.toDateString() + "-"  +tweet.created_at.toLocaleTimeString();
+          $time.text(dateText);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          index -= 1;
+          if (("#" + tweet.user) === "#" + tweedId){
+            $time.appendTo($tweet);
+            $tweet.appendTo($tweets);
+          }
+        }
+
+        $tweets.appendTo("body");
+        
+      });
+
+
+
+      
+
+      
+      
+
     </script>
+    <h1> Tweeds </h1>
+    <p></p>
+    
+
   </body>
+  
 </html>
