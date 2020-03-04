@@ -7,9 +7,11 @@
   </head>
 
   
+
+  
   
   <body class="tweetgrid">
-      
+
     <script>
 
       var tweetIDs = []; 
@@ -17,7 +19,7 @@
 
       $(document).ready(function(){
         var $h1 = $('h1');
-        var $body = $('body');
+        var $body = $("body");
         $body.html('');
         $h1.appendTo($body);
         var $tweets = $("<div class='tweets'></div>");
@@ -42,17 +44,17 @@
           $tweet.appendTo($tweets);
 
         }
-        $tweets.appendTo("body");
+        $tweets.appendTo($body);
 
         
 
 
       });
 
-      $(document).addEventListener("click")(function(event){
+      $(document).click(function(event){
 
+        
 
-      // for (var j = 0; j < tweetIDs.length; j++) 
         
         var $h1 = $('h1');
         var $body = $('body');
@@ -71,13 +73,13 @@
           $time.text(dateText);
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
           index -= 1;
-          if (("#" + tweet.user) === "#" + tweedId){
+          if ((tweet.user) === event.target.id){
             $time.appendTo($tweet);
             $tweet.appendTo($tweets);
           }
         }
 
-        $tweets.appendTo("body");
+        $tweets.appendTo($body);
         
       });
 
@@ -89,8 +91,11 @@
       
 
     </script>
+      
+    
     <h1> Tweeds </h1>
     <p></p>
+    <div class="TL"> </div>
     
 
   </body>
