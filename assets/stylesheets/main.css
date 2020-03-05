@@ -68,8 +68,8 @@ table {
 
 .tweets {
   margin: 20px;
-  min-width: 35%;
-  max-width: 60%;
+  min-width: 45%;
+  max-width: 80%;
   display: inline-block;
   text-align: left;
   /*grid-column: 2 / 3;*/
@@ -105,6 +105,16 @@ h1 {
   font: 400 24px Arial, sans-serif;
   text-align: center;
   margin: 30px;
+
+}
+
+.postbutton {
+
+  margin: 30px;
+  background: #F8EFE7;
+  color: #63ABBA;
+  font: 400 12px Arial, sans-serif;
+
 
 }
 

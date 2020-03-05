@@ -4,38 +4,50 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <link rel="stylesheet" href="assets/stylesheets/main.css">
+    <title> Twiddle </title>
   </head>
 
   
-
-  
-  
   <body class="tweetgrid">
 
-    <script>
+  	<h1> Tweeds </h1>
+    <p></p>
+    <div class="TL"> </div>
 
+
+    <script>
       var tweetIDs = []; 
       var tweetDict = {};
+      var visitor = "user";
+      streams.users[visitor] = [];
+      
 
-      var loadtweets = $('<div class="divcenter"> <button id="loadtweets">Refresh Tweeds</button> </div>');
 
-      $(document).ready(function(){
-        var $h1 = $('h1');
-        var $body = $("body");
+
+      var $loadtweets = $('<div class="divcenter"> <button id="loadtweets">Refresh Tweeds</button> </div>');
+      var $h1 = $('h1');
+      var $body = $("body");
+
+      var loadTimeline = function (targeted, event) {
+
         $body.html('');
         $h1.appendTo($body);
+        $loadtweets.appendTo($body); 
+        var $posttweed = $('<div id="posttweets"> <button id="postbuttonforreal"class="postbutton">Post Tweed</button></div>');
+        $posttweed.appendTo($body); 
+        var $tobetweeded = $("<input type='text' id='myText'>");
+      	$tobetweeded.appendTo($posttweed);
+
+
         var $tweets = $("<div class='tweets'></div>");
-        var $times = $("<div></div>");    
-        var $tweed = $("<div></div>"); 
-        var $loadtweets = loadtweets;
-        $loadtweets.appendTo($body);
+        var $times = $("<div></div>");  
 
         var index = streams.home.length - 1;
         while(index >= 0){
+          var tweedId = tweetIDs[index];
           var $time = $('<p class="time"></p>');
           var tweet = streams.home[index];
           var $tweet = $('<div class="tweet"></div>');
-          var dt = (new Date);
           var dateText = tweet.created_at.toDateString() + "-"  +tweet.created_at.toLocaleTimeString();
           $time.text(dateText);
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
@@ -44,95 +56,43 @@
           $($tweet).attr('id', (tweetID));
           tweetIDs.push(tweetID);
           tweetDict[tweetID] = tweet.user;
-          $time.appendTo($tweet);
-          $tweet.appendTo($tweets);
 
+          if (targeted) {
+          	if ((tweet.user) === event.target.id && event.target.className !== "time") {
+              $time.appendTo($tweet);
+              $tweet.appendTo($tweets);
+          	}
+
+          } else {
+          	  $time.appendTo($tweet);
+              $tweet.appendTo($tweets);
+          }
+          
         }
+
         $tweets.appendTo($body);
+  
+      }
 
-        
-
-
+      $(document).ready(function(){
+      	loadTimeline(false);
       });
 
       $(document).click(function(event){
 
+      	if (event.target.className === "tweet" && event.target.id !== '') {
+      	  loadTimeline(true, event);
+        } else if (event.target.id === "loadtweets") {
+          loadTimeline(false);
+        } else if (event.target.id === "postbuttonforreal") {
+        	writeTweet(document.getElementById("myText").value);
+        	loadTimeline(false);
+        }
 
-        console.log(event);
-
-        
-
-        if (event.target.className === "tweet" && event.target.id !== '') {
-                var $h1 = $('h1');
-                var $body = $('body');
-                $body.html('');
-                $h1.appendTo($body);
-                var $tweets = $("<div class='tweets'></div>");
-                var $times = $("<div></div>");   
-                var $loadtweets = loadtweets;
-                $loadtweets.appendTo($body); 
-        
-                var index = streams.home.length - 1;
-                while(index >= 0){
-                  var tweedId = tweetIDs[index];
-                  var $time = $('<p class="time"></p>');
-                  var tweet = streams.home[index];
-                  var $tweet = $('<div class="tweet"></div>');
-                  var dateText = tweet.created_at.toDateString() + "-"  +tweet.created_at.toLocaleTimeString();
-                  $time.text(dateText);
-                  $tweet.text('@' + tweet.user + ': ' + tweet.message);
-                  index -= 1;
-                  if ((tweet.user) === event.target.id && event.target.className !== "time"){
-                    $time.appendTo($tweet);
-                    $tweet.appendTo($tweets);
-                  }
-                }
-        
-                $tweets.appendTo($body);
-              }
-
-              else if (event.target.id === "loadtweets") {
-                var $h1 = $('h1');
-                var $body = $("body");
-                $body.html('');
-                $h1.appendTo($body);
-                var $tweets = $("<div class='tweets'></div>");
-                var $times = $("<div></div>");    
-                var $tweed = $("<div></div>"); 
-                var $loadtweets = loadtweets;
-                $loadtweets.appendTo($body);
-
-                var index = streams.home.length - 1;
-                while(index >= 0){
-                  var $time = $('<p class="time"></p>');
-                  var tweet = streams.home[index];
-                  var $tweet = $('<div class="tweet"></div>');
-                  var dt = (new Date);
-                  var dateText = tweet.created_at.toDateString() + "-"  +tweet.created_at.toLocaleTimeString();
-                  $time.text(dateText);
-                  $tweet.text('@' + tweet.user + ': ' + tweet.message);
-                  index -= 1;
-                  var tweetID = tweet.user;
-                  $($tweet).attr('id', (tweetID));
-                  tweetIDs.push(tweetID);
-                  tweetDict[tweetID] = tweet.user;
-                  $time.appendTo($tweet);
-                  $tweet.appendTo($tweets);
-
-                }
-                $tweets.appendTo($body);
-              }
         
       });
-    
 
     </script>
-      
-    
-    <h1> Tweeds </h1>
-    <p></p>
-    <div class="TL"> </div>
-    
 
   </body>
   

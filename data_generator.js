@@ -11,6 +11,10 @@ streams.users.shawndrost = [];
 streams.users.sharksforcheap = [];
 streams.users.mracus = [];
 streams.users.douglascalhoun = [];
+streams.users.kimkardashian = [];
+streams.users.satan = [];
+streams.users.queenofengland = [];
+streams.users.nobody = [];
 window.users = Object.keys(streams.users);
 
 // utility function for adding tweets to our data structures
@@ -65,5 +69,6 @@ var writeTweet = function(message){
   var tweet = {};
   tweet.user = visitor;
   tweet.message = message;
+  tweet.created_at = new Date();
   addTweet(tweet);
 };
